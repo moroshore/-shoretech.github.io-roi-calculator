@@ -3,110 +3,102 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SHORE - Process ROI Calculator</title>
+<title>SHORE - Process ROI & Pricing Calculator</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
 :root{
---bk:#0D0D0D;--dk:#141414;--cd:#1A1A1A;--br:#2A2A2A;--br2:#333;
---gd:#F5C842;--gd2:#C9A230;--tx:#F0EDE6;--mt:#8A8580;
---gn:#1D9E75;--rd:#E24B4A;--bl:#378ADD;
+--bk:#0B0F19;--dk:#111827;--cd:#1F2937;--br:#374151;--br2:#4B5563;
+--gd:#0768F8;--gd2:#0052CC;--tx:#F9FAFB;--mt:#9CA3AF;
+--gn:#10B981;--rd:#EF4444;--bl:#3B82F6;
 }
 body{background:var(--bk);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:var(--tx);min-height:100vh;}
-.app{max-width:1000px;margin:0 auto;background:var(--bk);min-height:100vh;box-shadow:0 0 30px rgba(0,0,0,0.5);}
-.topbar{background:var(--dk);border-bottom:1px solid var(--br);padding:16px 20px;display:flex;align-items:center;justify-content:space-between;}
-.brand{display:flex;align-items:center;gap:10px;}
-.brace{font-size:26px;font-weight:700;color:var(--gd);line-height:1;}
-.bname{font-size:14px;font-weight:500;color:var(--tx);letter-spacing:.08em;}
-.bsub{font-size:9px;color:var(--mt);letter-spacing:.14em;text-transform:uppercase;margin-top:1px;}
+.app{max-width:1100px;margin:0 auto;background:var(--bk);min-height:100vh;box-shadow:0 0 40px rgba(0,0,0,0.6);}
+.topbar{background:var(--dk);border-bottom:1px solid var(--br);padding:18px 20px;display:flex;align-items:center;justify-content:space-between;}
+.brand{display:flex;align-items:center;gap:12px;}
+.brace{font-size:28px;font-weight:800;color:var(--gd);line-height:1;font-family:monospace;}
+.bname{font-size:16px;font-weight:700;color:var(--tx);letter-spacing:.05em;}
+.bsub{font-size:9px;color:var(--mt);letter-spacing:.12em;text-transform:uppercase;margin-top:2px;}
 .top-actions{display:flex;gap:8px;}
-.btn-imp{background:none;border:1px solid var(--br2);border-radius:6px;padding:7px 12px;font-size:11px;color:var(--mt);cursor:pointer;display:flex;align-items:center;gap:5px;}
+.btn-imp{background:none;border:1px solid var(--br2);border-radius:6px;padding:7px 14px;font-size:12px;color:var(--mt);cursor:pointer;display:flex;align-items:center;gap:6px;}
 .btn-imp:hover{color:var(--tx);border-color:var(--mt);}
-.btn-exp{background:var(--gd);color:var(--bk);border:none;border-radius:6px;padding:7px 12px;font-size:11px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:5px;}
+.btn-exp{background:var(--gd);color:#fff;border:none;border-radius:6px;padding:7px 14px;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;}
 .btn-exp:hover{background:var(--gd2);}
 
 .phase-bar{background:var(--dk);border-bottom:1px solid var(--br);display:flex;}
-.phase{flex:1;padding:14px 16px;text-align:center;cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;}
+.phase{flex:1;padding:16px;text-align:center;cursor:pointer;border-bottom:3px solid transparent;transition:all .2s;}
 .phase.active{border-bottom-color:var(--gd);}
-.phase-num{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--mt);margin-bottom:3px;}
-.phase-label{font-size:12px;font-weight:500;color:var(--mt);}
+.phase-num{font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--mt);margin-bottom:4px;}
+.phase-label{font-size:13px;font-weight:600;color:var(--mt);}
 .phase.active .phase-label{color:var(--gd);}
 .phase.done .phase-label{color:var(--gn);}
-.phase.done .phase-num{color:var(--gn);}
 
-.body{padding:16px;}
-.sec{background:var(--cd);border:1px solid var(--br);border-radius:8px;padding:16px;margin-bottom:12px;}
-.sec-title{font-size:9px;font-weight:600;color:var(--gd);letter-spacing:.14em;text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:6px;}
-.sec-title i{font-size:13px;}
-.fg{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
-.ff{display:flex;flex-direction:column;gap:4px;}
-.ff label{font-size:11px;color:var(--mt);font-weight:500;}
-.ff input, .ff select, .ff textarea{background:#0F0F0F;border:1px solid var(--br);border-radius:6px;color:var(--tx);font-size:13px;padding:8px 10px;outline:none;font-family:inherit;width:100%;}
+.body{padding:20px;}
+.sec{background:var(--cd);border:1px solid var(--br);border-radius:8px;padding:20px;margin-bottom:16px;}
+.sec-title{font-size:11px;font-weight:700;color:var(--gd);letter-spacing:.12em;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:8px;}
+.sec-title i{font-size:16px;}
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.ff{display:flex;flex-direction:column;gap:5px;}
+.ff label{font-size:12px;color:var(--mt);font-weight:600;}
+.ff input, .ff select, .ff textarea{background:#0B0F19;border:1px solid var(--br);border-radius:6px;color:var(--tx);font-size:14px;padding:9px 12px;outline:none;font-family:inherit;width:100%;}
 .ff input:focus, .ff select:focus, .ff textarea:focus{border-color:var(--gd);}
-.ff textarea{resize:vertical;min-height:60px;}
-.ff .hint{font-size:10px;color:var(--mt);margin-top:2px;}
-.ff select option{background:#111;}
+.ff textarea{resize:vertical;min-height:70px;}
 .full{grid-column:1/-1;}
 
-.check-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:4px 0;}
-.check-item{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--tx);cursor:pointer;}
+.check-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:6px 0;}
+.check-item{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--tx);cursor:pointer;}
 .check-item input{width:auto;cursor:pointer;}
 
-.people-row{display:flex;gap:8px;align-items:flex-end;margin-bottom:8px;}
-.people-row .ff{flex:1;}
-.people-row .ff.fixed-w{flex:0 0 65px;}
-.people-row .ff.fixed-w2{flex:0 0 100px;}
-.rm-btn{background:none;border:1px solid var(--br);border-radius:6px;padding:8px;cursor:pointer;color:var(--mt);font-size:13px;height:36px;display:flex;align-items:center;}
+.dynamic-row{display:flex;gap:10px;align-items:flex-end;margin-bottom:10px;}
+.dynamic-row .ff{flex:1;}
+.dynamic-row .fixed-s{flex:0 0 140px;}
+.dynamic-row .fixed-m{flex:0 0 100px;}
+.rm-btn{background:none;border:1px solid var(--br);border-radius:6px;padding:9px;cursor:pointer;color:var(--mt);font-size:14px;height:39px;display:flex;align-items:center;}
 .rm-btn:hover{color:var(--rd);border-color:var(--rd);}
-.add-btn{background:none;border:1px dashed var(--br2);border-radius:6px;padding:8px 14px;font-size:12px;color:var(--mt);cursor:pointer;width:100%;margin-top:4px;}
+.add-btn{background:none;border:1px dashed var(--br2);border-radius:6px;padding:10px 14px;font-size:13px;color:var(--mt);cursor:pointer;width:100%;margin-top:6px;font-weight:500;}
 .add-btn:hover{border-color:var(--gd);color:var(--gd);}
 
-.toggle-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--br);}
-.toggle-row:last-child{border:none;}
-.toggle-label{font-size:12px;color:var(--tx);}
-.toggle-hint{font-size:10px;color:var(--mt);margin-top:2px;}
 .tog{display:flex;gap:6px;}
-.tog button{padding:5px 12px;border-radius:999px;font-size:11px;border:1px solid var(--br);background:none;color:var(--mt);cursor:pointer;}
-.tog button.active-y{background:#0A1F15;border-color:var(--gn);color:var(--gn);}
-.tog button.active-n{background:#1A0A0A;border-color:var(--rd);color:var(--rd);}
-.tog button.active-b{background:#0A1A2A;border-color:var(--bl);color:var(--bl);}
+.tog button{padding:6px 14px;border-radius:6px;font-size:12px;font-weight:500;border:1px solid var(--br);background:#0B0F19;color:var(--mt);cursor:pointer;flex:1;}
+.tog button.active-y{background:#064E3B;border-color:var(--gn);color:#A7F3D0;}
+.tog button.active-n{background:#7F1D1D;border-color:var(--rd);color:#FCA5A5;}
+.tog button.active-b{background:#1E3A8A;border-color:var(--bl);color:#BFDBFE;}
 
-.alert{background:#1A1200;border:1px solid #F5C84255;border-radius:6px;padding:10px 14px;font-size:12px;color:var(--gd);margin-bottom:12px;display:none;}
-.alert ul{margin-top:4px;padding-left:14px;}
+.formula-box{background:#111827;border-left:4px solid var(--gd);padding:12px;margin-top:14px;border-radius:0 6px 6px 0;font-family:monospace;font-size:12px;color:#9CA3AF;}
+.formula-title{font-weight:700;color:var(--tx);margin-bottom:4px;font-size:11px;text-transform:uppercase;letter-spacing:0.05em;}
 
-.roi-preview{background:#0A1F15;border:1px solid #1D9E7555;border-radius:8px;padding:14px;margin-top:12px;}
-.roi-preview-title{font-size:9px;color:var(--gn);letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px;}
-.roi-row{display:flex;justify-content:space-between;padding:4px 0;font-size:12px;}
-.roi-row span:first-child{color:var(--mt);}
-.roi-row span:last-child{color:var(--tx);font-weight:500;}
-.roi-row total span:last-child{color:var(--gd);font-size:15px;}
-.roi-row.total{border-top:1px solid #1D9E7533;margin-top:6px;padding-top:8px;}
+.roi-preview{background:#064E3B;border:1px solid #047857;border-radius:8px;padding:16px;margin-top:16px;}
+.roi-preview-title{font-size:10px;color:#A7F3D0;letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px;font-weight:700;}
+.roi-row{display:flex;justify-content:space-between;padding:5px 0;font-size:13px;}
+.roi-row span:first-child{color:#D1D5DB;}
+.roi-row span:last-child{color:var(--tx);font-weight:600;}
+.roi-row.total{border-top:1px solid #047857;margin-top:8px;padding-top:10px;}
+.roi-row.total span:last-child{color:#22C55E;font-size:17px;}
 
-.rtable{width:100%;border-collapse:collapse;font-size:12px;}
-.rtable th{text-align:left;padding:7px 8px;border-bottom:1px solid var(--br);color:var(--mt);font-weight:500;font-size:9px;letter-spacing:.1em;text-transform:uppercase;}
-.rtable td{padding:10px 8px;border-bottom:1px solid #1C1C1C;vertical-align:middle;color:var(--tx);}
-.sbar{height:4px;background:#222;border-radius:999px;margin-top:4px;overflow:hidden;}
+.rtable{width:100%;border-collapse:collapse;font-size:13px;}
+.rtable th{text-align:left;padding:10px;border-bottom:1px solid var(--br);color:var(--mt);font-weight:600;font-size:10px;letter-spacing:.05em;text-transform:uppercase;}
+.rtable td{padding:12px 10px;border-bottom:1px solid #263143;color:var(--tx);}
+.sbar{height:5px;background:#111827;border-radius:999px;margin-top:5px;overflow:hidden;}
 .sfill{height:100%;border-radius:999px;}
 
-.empty{text-align:center;padding:2.5rem 1rem;color:var(--mt);font-size:13px;}
-.empty i{font-size:26px;display:block;margin-bottom:8px;color:var(--br2);}
-
-.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin-bottom:12px;}
-.mc{background:#111;border-radius:6px;padding:12px;border:1px solid var(--br);}
-.mc-label{font-size:9px;color:var(--mt);margin-bottom:4px;text-transform:uppercase;letter-spacing:.1em;}
-.mc-val{font-size:18px;font-weight:500;color:var(--tx);}
+.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:16px;}
+.mc{background:var(--cd);border-radius:8px;padding:16px;border:1px solid var(--br);}
+.mc-label{font-size:10px;color:var(--mt);margin-bottom:6px;text-transform:uppercase;letter-spacing:.05em;}
+.mc-val{font-size:22px;font-weight:700;color:var(--tx);}
 .mc-val.pos{color:var(--gn);}
-.mc-val.gld{color:var(--gd);}
 
-.pitch-box{background:#111;border:1px solid var(--br);border-radius:8px;padding:16px;margin-top:14px;display:none;}
-.pitch-text{background:#070707;border:1px solid var(--br2);border-radius:6px;padding:12px;color:#A9A9A9;font-size:12px;white-space:pre-wrap;max-height:250px;overflow-y:auto;font-family:monospace;margin-bottom:10px;}
+.pitch-box{background:#111827;border:1px solid var(--br);border-radius:8px;padding:18px;margin-top:16px;display:none;}
+.pitch-text{background:#0B0F19;border:1px solid var(--br);border-radius:6px;padding:14px;color:#D1D5DB;font-size:13px;white-space:pre-wrap;max-height:300px;overflow-y:auto;font-family:monospace;margin-bottom:12px;line-height:1.5;}
 
-.btn-row{display:flex;gap:8px;justify-content:flex-end;margin-top:14px;}
-.btn-primary{background:var(--gd);color:var(--bk);border:none;border-radius:6px;padding:10px 20px;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;}
+.btn-row{display:flex;gap:10px;justify-content:flex-end;margin-top:16px;}
+.btn-primary{background:var(--gd);color:#fff;border:none;border-radius:6px;padding:11px 24px;font-size:14px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:8px;}
 .btn-primary:hover{background:var(--gd2);}
-.btn-sec{background:none;border:1px solid var(--br);border-radius:6px;padding:10px 18px;font-size:13px;cursor:pointer;color:var(--mt);}
-.btn-sec:hover{color:var(--tx);}
+.btn-sec{background:none;border:1px solid var(--br);border-radius:6px;padding:11px 20px;font-size:14px;cursor:pointer;color:var(--mt);}
+.btn-sec:hover{color:var(--tx);border-color:var(--mt);}
 
+.badge{padding:3px 8px;border-radius:4px;font-size:11px;font-weight:600;}
+.empty{text-align:center;padding:3rem 1rem;color:var(--mt);font-size:14px;}
+.empty i{font-size:32px;display:block;margin-bottom:10px;color:var(--br2);}
 input[type=file]{display:none;}
 </style>
 </head>
@@ -116,204 +108,221 @@ input[type=file]{display:none;}
 
 <div class="topbar">
   <div class="brand">
-    <div class="brace">{</div>
+    <div class="brace">[</div>
     <div>
-      <div class="bname">SHORE</div>
-      <div class="bsub">Process ROI Calculator</div>
+      <div class="bname">SHORE TECH</div>
+      <div class="bsub">Hyperautomation ROI & Pricing Engine</div>
     </div>
   </div>
   <div class="top-actions">
-    <button class="btn-imp" onclick="document.getElementById('file-in').click()"><i class="ti ti-upload"></i> Importar</button>
+    <button class="btn-imp" onclick="document.getElementById('file-in').click()"><i class="ti ti-upload"></i> Importar Cenário</button>
     <input type="file" id="file-in" accept=".json" onchange="importData(event)"/>
-    <button class="btn-exp" onclick="exportData()"><i class="ti ti-download"></i> Exportar</button>
+    <button class="btn-exp" onclick="exportData()"><i class="ti ti-download"></i> Exportar Projeto</button>
   </div>
 </div>
 
 <div class="phase-bar">
   <div class="phase active" id="ph-r1" onclick="switchPhase('r1')">
-    <div class="phase-num">Etapa 1</div>
-    <div class="phase-label">Diagnóstico do Processo</div>
+    <div class="phase-num">Fase 1</div>
+    <div class="phase-label">Mapeamento & Gargalo</div>
   </div>
   <div class="phase" id="ph-r2" onclick="switchPhase('r2')">
-    <div class="phase-num">Etapa 2</div>
-    <div class="phase-label">Montar Proposta</div>
+    <div class="phase-num">Fase 2</div>
+    <div class="phase-label">Preço & Proposta Shore</div>
   </div>
   <div class="phase" id="ph-rank" onclick="switchPhase('rank')">
-    <div class="phase-num">Etapa 3</div>
-    <div class="phase-label">Resultados & Pitch (<span id="cnt">0</span>)</div>
+    <div class="phase-num">Fase 3</div>
+    <div class="phase-label">Business Case Consolidado (<span id="cnt">0</span>)</div>
   </div>
 </div>
 
 <div class="body">
 
   <div id="view-r1">
-    <div class="alert" id="alert-r1"><strong>Campos obrigatórios:</strong><ul id="alert-list-r1"></ul></div>
-
     <div class="sec">
-      <div class="sec-title"><i class="ti ti-building"></i> Contexto Geral</div>
+      <div class="sec-title"><i class="ti ti-building"></i> Informações do Cliente</div>
       <div class="fg">
-        <div class="ff"><label>Empresa</label><input id="c-empresa" type="text" placeholder="Ex: Grupo Votorantim"/></div>
-        <div class="ff"><label>Nome do contato principal</label><input id="c-contato" type="text" placeholder="Ex: Marcos Andrade"/></div>
+        <div class="ff"><label>Empresa</label><input id="c-empresa" type="text" placeholder="Ex: Logística Global S.A."/></div>
+        <div class="ff"><label>Interlocutor / Contato</label><input id="c-contato" type="text" placeholder="Ex: Diretor de Operações"/></div>
       </div>
     </div>
 
     <div class="sec">
-      <div class="sec-title"><i class="ti ti-clock-play"></i> Frequência e Tempo de Execução</div>
+      <div class="sec-title"><i class="ti ti-activity"></i> Volumetria e Tempo Operacional</div>
       <div class="fg">
-        <div class="ff full"><label>Nome do processo *</label><input id="p-name" type="text" placeholder="Ex: Conciliação bancária mensal"/></div>
-        <div class="ff"><label>Recorrência do processo</label>
+        <div class="ff full"><label>Nome do Processo Analisado *</label><input id="p-name" type="text" placeholder="Ex: Lançamento de Notas Fiscais no ERP"/></div>
+        <div class="ff"><label>Recorrência</label>
           <select id="p-funit" onchange="updatePreview()">
-            <option value="dia">Diário</option>
+            <option value="dia">Diário (22 dias úteis/mês)</option>
             <option value="semana">Semanal</option>
             <option value="mes" selected>Mensal</option>
             <option value="ano">Anual</option>
           </select>
         </div>
-        <div class="ff"><label>Quantas vezes é executado por período? *</label><input id="p-freq" type="number" min="1" value="1" oninput="updatePreview()"/></div>
-        <div class="ff"><label>Tempo gasto em CADA execução (Minutos) *</label><input id="p-time" type="number" min="1" placeholder="Ex: 45" oninput="updatePreview()"/></div>
-        <div class="ff"><label>Volume de itens/registros por execução (Opcional)</label><input id="p-vol" type="number" min="0" placeholder="Ex: 500 itens por vez"/></div>
+        <div class="ff"><label>Frequência (Quantas vezes por período?) *</label><input id="p-freq" type="number" min="1" value="1" oninput="updatePreview()"/></div>
+        <div class="ff"><label>Tempo de Execução p/ vez (Minutos) *</label><input id="p-time" type="number" min="1" placeholder="Ex: 30" oninput="updatePreview()"/></div>
+        <div class="ff"><label>Volumetria Processual (Itens/Registros por Período)</label><input id="p-vol" type="number" min="0" placeholder="Ex: 2500" oninput="updatePreview()"/></div>
       </div>
     </div>
 
     <div class="sec">
-      <div class="sec-title"><i class="ti ti-list-check"></i> Como é feito hoje? (Passo a passo do processo)</div>
-      <div class="check-grid" style="margin-bottom: 12px;">
-        <label class="check-item"><input type="checkbox" class="p-step" value="Digitação Manual"> Digitação manual de dados</label>
-        <label class="check-item"><input type="checkbox" class="p-step" value="Copia e Cola"> Copia e cola entre sistemas/planilhas</label>
-        <label class="check-item"><input type="checkbox" class="p-step" value="Exportar Relatórios"> Exportação/Download de relatórios</label>
-        <label class="check-item"><input type="checkbox" class="p-step" value="Conferência Visual"> Conferência visual / validação de linhas</label>
-        <label class="check-item"><input type="checkbox" class="p-step" value="Envio de E-mails"> Envio manual de e-mails/alertas</label>
-        <label class="check-item"><input type="checkbox" class="p-step" value="Análise de Documentos"> Leitura e extração de PDFs/Documentos</label>
+      <div class="sec-title"><i class="ti ti-settings-automation"></i> Características do Legado & Sistemas</div>
+      <div class="ff full" style="margin-bottom:12px;">
+        <label>Os sistemas envolvidos possuem APIs disponíveis?</label>
+        <select id="p-api" onchange="updatePreview()">
+          <option value="sim">Sim (Sistemas modernos com documentação aberta)</option>
+          <option value="parcial" selected>Parcialmente (Alguns sistemas via API, outros fechados)</option>
+          <option value="nao">Não possui API (Sistemas legados, telas web protegidas ou SAP antigo)</option>
+        </select>
+      </div>
+      <div class="check-grid" style="margin-bottom:12px;">
+        <label class="check-item"><input type="checkbox" class="p-step" value="Digitação Manual" checked> Digitação manual de dados</label>
+        <label class="check-item"><input type="checkbox" class="p-step" value="Copia e Cola" checked> Copia e cola de dados (Sistemas/Planilhas)</label>
+        <label class="check-item"><input type="checkbox" class="p-step" value="Extração de Relatórios"> Extração de relatórios estruturados</label>
+        <label class="check-item"><input type="checkbox" class="p-step" value="Conferência Visual"> Conferência visual ou validação dupla</label>
+        <label class="check-item"><input type="checkbox" class="p-step" value="Leitura de Documentos"> Leitura/Interpretação de PDFs ou imagens</label>
       </div>
       <div class="ff full">
-        <label>Descrição livre das ações e sistemas utilizados (O que o cliente faz?)</label>
-        <textarea id="p-desc" placeholder="Ex: Abrir o e-mail, baixar o anexo em Excel, fazer login no TOTVS, conferir linha por linha e lançar manualmente..."></textarea>
+        <label>Mapeamento das Ações Operacionais (Passo a Passo Livre)</label>
+        <textarea id="p-desc" placeholder="Ex: Abre o e-mail, faz download do anexo, abre o TOTVS, pesquisa o fornecedor, preenche os campos manualmente e valida no validador externo..."></textarea>
       </div>
     </div>
 
     <div class="sec">
-      <div class="sec-title"><i class="ti ti-users"></i> Quem executa essa tarefa?</div>
+      <div class="sec-title"><i class="ti ti-users"></i> Custos do Time Dedicado ao Processo</div>
       <div id="people-list"></div>
-      <button class="add-btn" onclick="addPerson()"><i class="ti ti-plus"></i> + Vincular profissional / cargo</button>
+      <button class="add-btn" onclick="addPerson()"><i class="ti ti-plus"></i> + Vincular Profissional</button>
     </div>
 
     <div class="sec">
-      <div class="sec-title"><i class="ti ti-alert-circle"></i> Dores e Riscos Identificados</div>
+      <div class="sec-title"><i class="ti ti-alert-triangle"></i> Riscos, Falhas e Reclamações</div>
       <div class="toggle-row">
-        <div><div class="toggle-label">Ocorre muito erro humano ou retrabalho?</div></div>
+        <div class="toggle-label">Erros frequentes exigem retrabalho da equipe?</div>
         <div class="tog">
           <button id="err-y" onclick="setToggle('err','y')">Sim</button>
           <button id="err-b" onclick="setToggle('err','b')">Às vezes</button>
-          <button id="err-n" onclick="setToggle('err','n')">Não</button>
+          <button id="err-n" onclick="setToggle('err','n')" class="active-n">Não</button>
         </div>
       </div>
-      <div class="toggle-row">
-        <div><div class="toggle-label">Oreceu prejuízos, atrasos ou multas?</div></div>
+      <div class="toggle-row" style="margin-top:10px; margin-bottom:12px;">
+        <div class="toggle-label">O processo já causou prejuízos financeiros diretos ou multas?</div>
         <div class="tog">
           <button id="inc-y" onclick="setToggle('inc','y')">Sim</button>
-          <button id="inc-n" onclick="setToggle('inc','n')">Não</button>
+          <button id="inc-n" onclick="setToggle('inc','n')" class="active-n">Não</button>
         </div>
       </div>
-      <div class="toggle-row" style="border:none; padding-bottom:12px;">
-        <div><div class="toggle-label">É um processo confuso e difícil de ensinar para novos funcionários?</div></div>
-        <div class="tog">
-          <button id="std-y" onclick="setToggle('std','y')">Sim</button>
-          <button id="std-n" onclick="setToggle('std','n')">Não</button>
-        </div>
-      </div>
-      <div class="ff full"><label>Frase marcante ou reclamação do cliente (Dores Relatadas)</label><textarea id="p-notes" placeholder="Ex: 'Se o fulano sai de férias, a empresa trava.' ou 'Sempre ficamos até tarde fechando isso.'"></textarea></div>
+      <div class="ff full"><label>Dores Relatadas / Frases de Impacto do Cliente</label><textarea id="p-notes" placeholder="Ex: 'Se o analista faltar, o faturamento da empresa atrasa.'"></textarea></div>
     </div>
 
     <div class="sec">
-      <div class="sec-title"><i class="ti ti-coin"></i> Outros Gastos Extra (Opcional)</div>
+      <div class="sec-title"><i class="ti ti-calculator"></i> Custos Ocultos Adicionais</div>
       <div class="fg">
-        <div class="ff"><label>Prejuízo estimado com erros (R$/mês)</label><input id="p-errcost" type="number" min="0" placeholder="0" oninput="updatePreview()"/></div>
-        <div class="ff"><label>Custos com multas/penalidades (R$/mês)</label><input id="p-pencost" type="number" min="0" placeholder="0" oninput="updatePreview()"/></div>
+        <div class="ff"><label>Prejuízo com Falhas Humanas (R$/mês)</label><input id="p-errcost" type="number" min="0" placeholder="0" oninput="updatePreview()"/></div>
+        <div class="ff"><label>Gastos com Multas/Atrasos (R$/mês)</label><input id="p-pencost" type="number" min="0" placeholder="0" oninput="updatePreview()"/></div>
       </div>
       
       <div class="roi-preview" id="roi-preview" style="display:none">
-        <div class="roi-preview-title"><i class="ti ti-calculator"></i> Potencial de Desperdício Mensal Descoberto</div>
-        <div class="roi-row"><span>Custo de tempo de equipe (Com Encargos CLT se aplicável):</span><span id="prev-labor">R$ 0</span></div>
-        <div class="roi-row"><span>Custo de Falhas/Multas adicionais:</span><span id="prev-extra">R$ 0</span></div>
-        <div class="roi-row total"><span>Custo Total do Gargalo:</span><span id="prev-total">R$ 0</span></div>
+        <div class="roi-preview-title"><i class="ti ti-target"></i> Diagnóstico de Desperdício Atual</div>
+        <div class="roi-row"><span>Custo Operacional de Equipe (Pessoas × Horas × % Substituição × Encargos):</span><span id="prev-labor">R$ 0</span></div>
+        <div class="roi-row"><span>Perdas com Erros e Penalidades:</span><span id="prev-extra">R$ 0</span></div>
+        <div class="roi-row total"><span>Custo Mensal do Gargalo Legado:</span><span id="prev-total">R$ 0</span></div>
+        
+        <div class="formula-box">
+          <div class="formula-title">Transparência do Cálculo (Fórmula)</div>
+          <div id="formula-r1-text"></div>
+        </div>
       </div>
     </div>
 
     <div class="btn-row">
-      <button class="btn-sec" onclick="clearR1()">Limpar Formulário</button>
-      <button class="btn-primary" onclick="saveProcess()"><i class="ti ti-device-floppy"></i> Gravar Processo</button>
+      <button class="btn-sec" onclick="clearR1()">Limpar</button>
+      <button class="btn-primary" onclick="saveProcess()"><i class="ti ti-arrow-right"></i> Gravar e Ver Proposta</button>
     </div>
   </div>
 
   <div id="view-r2" style="display:none">
-    <div style="background:var(--cd);border:1px solid var(--br);border-radius:8px;padding:14px;margin-bottom:12px;">
-      <div style="font-size:9px;color:var(--mt);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px;">Escolha o processo para precificar:</div>
-      <select id="r2-proc-sel" style="background:#0F0F0F;border:1px solid var(--br);border-radius:6px;color:var(--tx);font-size:13px;padding:8px 10px;width:100%;font-family:inherit;" onchange="loadR2()">
-        <option value="">— selecione —</option>
+    <div class="sec" style="background:var(--dk)">
+      <div style="font-size:11px;color:var(--mt);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px;font-weight:600;">Selecione o processo para desenhar a Proposta Shore:</div>
+      <select id="r2-proc-sel" style="background:#0B0F19;border:1px solid var(--br);border-radius:6px;color:var(--tx);font-size:14px;padding:10px;width:100%;font-family:inherit;" onchange="loadR2()">
+        <option value="">— Selecione um processo —</option>
       </select>
     </div>
 
     <div id="r2-form" style="display:none">
-      <div class="sec">
-        <div class="sec-title"><i class="ti ti-coin"></i> Quais custos farão parte da sua proposta Comercial?</div>
-        
-        <div class="toggle-row">
-          <div><div class="toggle-label">Cobrar taxa de Setup (Implementação)?</div></div>
-          <div class="tog"><button id="has-setup-y" onclick="toggleCostField('setup','y')">Sim</button><button id="has-setup-n" onclick="toggleCostField('setup','n')">Não</button></div>
-        </div>
-        <div class="ff" id="f-setup" style="display:none; margin-bottom:12px;"><label>Valor do Setup Comercial (R$)</label><input id="r2-setup" type="number" min="0" placeholder="Ex: 15000" oninput="updateR2Preview()"/></div>
-
-        <div class="toggle-row">
-          <div><div class="toggle-label">Terá cobrança de Sustentação Mensal?</div></div>
-          <div class="tog"><button id="has-fee-y" onclick="toggleCostField('fee','y')">Sim</button><button id="has-fee-n" onclick="toggleCostField('fee','n')">Não</button></div>
-        </div>
-        <div class="ff" id="f-fee" style="display:none; margin-bottom:12px;"><label>Sustentação Mensal (R$/mês)</label><input id="r2-fee" type="number" min="0" placeholder="Ex: 2000" oninput="updateR2Preview()"/></div>
-
-        <div class="toggle-row">
-          <div><div class="toggle-label">Haverá custo extra com licenças SaaS de tecnologia?</div></div>
-          <div class="tog">
-            <button id="has-saas-m" onclick="toggleCostField('saas','m')">Sim, Mensal</button>
-            <button id="has-saas-a" onclick="toggleCostField('saas','a')">Sim, Anual</button>
-            <button id="has-saas-n" onclick="toggleCostField('saas','n')">Não</button>
+      <div class="sec" style="border: 1px dashed var(--bl);">
+        <div class="sec-title" style="color:var(--bl);"><i class="ti ti-cpu"></i> Motor Pricing Shore: Sugestão Base Baseada em Escopo</div>
+        <div class="fg">
+          <div class="ff"><label>Valor da Hora de Desenvolvimento (R$)</label>
+            <select id="r2-rate" onchange="runPricingEngine()">
+              <option value="150" selected>R$ 150 / hora (Padrão)</option>
+              <option value="180">R$ 180 / hora</option>
+              <option value="220">R$ 220 / hora</option>
+              <option value="260">R$ 260 / hora</option>
+              <option value="300">R$ 300 / hora (Especialista Senior)</option>
+            </select>
+          </div>
+          <div class="ff"><label>Complexidade Técnica Avaliada</label>
+            <select id="r2-complex" onchange="runPricingEngine()">
+              <option value="baixa">Baixa (Poucas regras de negócio, 1 ou 2 telas)</option>
+              <option value="media" selected>Média (Regras de negócio moderadas, validações cruzadas)</option>
+              <option value="alta">Alta (Muitas exceções, cenários instáveis no legado)</option>
+            </select>
           </div>
         </div>
-        <div class="ff" id="f-saas" style="display:none; margin-bottom:12px;"><label>Custo da Tecnologia Licença (R$)</label><input id="r2-saas" type="number" min="0" placeholder="Ex: 500" oninput="updateR2Preview()"/></div>
+        <div class="formula-box" style="border-left-color:var(--bl); background:#111c30; margin-top:14px;">
+          <div class="formula-title" style="color:var(--bl);">Análise de Arquitetura & Esforço Estimado</div>
+          <div id="pricing-engine-output" style="color:#e5e7eb; font-size:13px; line-height:1.4;"></div>
+        </div>
       </div>
 
       <div class="sec">
-        <div class="sec-title"><i class="ti ti-chart-pie"></i> Projeção de Retorno (ROI)</div>
-        <div class="roi-preview" id="r2-preview" style="display:block;">
-          <div class="roi-row"><span>Desperdício Atual Reduzido:</span><span id="r2-benefit" style="color:var(--gn)">—</span></div>
-          <div class="roi-row"><span>Custo de Manutenção Comercial:</span><span id="r2-cost-out" style="color:var(--rd)">—</span></div>
-          <div class="roi-row total"><span>Retorno Líquido Mensal para o Cliente:</span><span id="r2-net">—</span></div>
-          <div class="roi-row" style="margin-top:6px; border-top:1px solid #333; padding-top:6px;"><span>Investimento Inicial Total:</span><span id="r2-invest">—</span></div>
-          <div class="roi-row"><span>Tempo de Payback Estimado:</span><span id="r2-payback" style="color:var(--gd)">—</span></div>
+        <div class="sec-title"><i class="ti ti-list"></i> Composição Comercial da Proposta (Visão do Cliente)</div>
+        <div style="font-size:12px; color:var(--mt); margin-bottom:12px;">Defina as linhas comerciais que farão parte do investimento. Elas entrarão como custo de adoção da solução para o cliente.</div>
+        
+        <div id="proposal-costs-list"></div>
+        <button class="add-btn" onclick="addProposalCost('','setup',0)"><i class="ti ti-plus"></i> + Adicionar Nova Linha de Custo</button>
+      </div>
+
+      <div class="sec">
+        <div class="sec-title"><i class="ti ti-chart-bar-off"></i> Projeção Financeira e Business Case Proposto</div>
+        <div class="roi-preview" id="r2-preview" style="background:#111827; border: 1px solid var(--br);">
+          <div class="roi-row"><span>Desperdício Mensal Atual do Cliente:</span><span id="r2-waste-label" style="color:var(--rd)">—</span></div>
+          <div class="roi-row"><span>(+) Custos Recorrentes Propostos (Mensalidade/Sustentação/Licenças):</span><span id="r2-cost-out" style="color:var(--bl)">—</span></div>
+          <div class="roi-row total" style="border-top-color:var(--br);"><span>Retorno Líquido Mensal Gerado ao Cliente:</span><span id="r2-net">—</span></div>
+          <div class="roi-row" style="margin-top:10px; border-top:1px dashed var(--br); padding-top:10px;"><span>Investimento Inicial Total (Setups propostos):</span><span id="r2-invest">—</span></div>
+          <div class="roi-row"><span>Payback Estimado da Solução:</span><span id="r2-payback" style="color:var(--gn); font-size:15px;">—</span></div>
+          
+          <div class="formula-box" style="border-left-color:var(--gn); background:#111b15; margin-top:14px;">
+            <div class="formula-title" style="color:var(--gn)">Demonstrativo Financeiro do Business Case</div>
+            <div id="formula-r2-text" style="font-size:12px; color:#9CA3AF;"></div>
+          </div>
         </div>
       </div>
 
       <div class="btn-row">
-        <button class="btn-primary" onclick="saveR2()"><i class="ti ti-check"></i> Salvar e Atualizar Proposta</button>
+        <button class="btn-primary" onclick="saveR2()"><i class="ti ti-check"></i> Consolidar Proposta no Projeto</button>
       </div>
     </div>
   </div>
 
   <div id="view-rank" style="display:none">
     <div class="sec">
-      <div class="sec-title"><i class="ti ti-apps"></i> Lista de Oportunidades Mapeadas</div>
-      <div id="rank-c"><div class="empty"><i class="ti ti-chart-bar"></i>Nenhum processo salvo ainda.</div></div>
+      <div class="sec-title"><i class="ti ti-layout-grid"></i> Matriz de Oportunidades Mapeadas</div>
+      <div id="rank-c"><div class="empty"><i class="ti ti-chart-bar"></i>Nenhum processo salvo no projeto atual.</div></div>
     </div>
     
     <div class="sec" id="summary-sec" style="display:none">
-      <div class="sec-title"><i class="ti ti-report-analytics"></i> Resumo Financeiro Consolidado</div>
+      <div class="sec-title"><i class="ti ti-report"></i> Visão Consolidada do Projeto</div>
       <div class="metrics" id="summary-m"></div>
-      <div class="btn-row" style="margin-top:14px">
-        <button class="btn-primary" style="background:var(--bl); color:#fff;" onclick="genPitch()"><i class="ti ti-message-code"></i> Estruturar Pitch Comercial de Fechamento</button>
+      
+      <div class="btn-row" style="margin-top:16px">
+        <button class="btn-primary" style="background:var(--gd2); color:#fff;" onclick="genPitch()"><i class="ti ti-message-dots"></i> Estruturar Pitch de Fechamento Shore</button>
       </div>
       
       <div class="pitch-box" id="pbox">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-          <span style="font-size:10px; text-transform:uppercase; color:var(--gd); letter-spacing:.1em; font-weight:600;">Pitch Pronto para Apresentação/WhatsApp</span>
-          <button class="btn-imp" style="padding:4px 8px;" onclick="copyPitch()"><i class="ti ti-copy"></i> Copiar Texto</button>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+          <span style="font-size:11px; text-transform:uppercase; color:var(--gd); letter-spacing:.05em; font-weight:700;">Pitch Estratégico Comercial Pronto</span>
+          <button class="btn-imp" style="padding:5px 10px;" onclick="copyPitch()"><i class="ti ti-copy"></i> Copiar Texto</button>
         </div>
         <div class="pitch-text" id="ptext"></div>
       </div>
@@ -326,12 +335,13 @@ input[type=file]{display:none;}
 <script>
 let procs=[];
 let people=[];
-let toggles={err:'n',inc:'n',std:'n',setup:'n',fee:'n',saas:'n'};
+let proposalCosts=[]; // Custos dinâmicos da etapa 2
+let toggles={err:'n',inc:'n'};
 let currentR2Id=null;
 
 function setToggle(k,v){
   toggles[k]=v;
-  const ids = k==='err'?['err-y','err-b','err-n']:k==='inc'?['inc-y','inc-n']:['std-y','std-n'];
+  const ids = k==='err'?['err-y','err-b','err-n']:['inc-y','inc-n'];
   ids.forEach(id=>{
     const el=document.getElementById(id); if(!el)return;
     el.className='';
@@ -340,46 +350,66 @@ function setToggle(k,v){
   updatePreview();
 }
 
-function toggleCostField(type,val){
-  toggles[type]=val;
-  if(type==='setup'){
-    document.getElementById('has-setup-y').className=val==='y'?'active-y':'';
-    document.getElementById('has-setup-n').className=val==='n'?'active-n':'';
-    document.getElementById('f-setup').style.display=val==='y'?'flex':'none';
-  }else if(type==='fee'){
-    document.getElementById('has-fee-y').className=val==='y'?'active-y':'';
-    document.getElementById('has-fee-n').className=val==='n'?'active-n':'';
-    document.getElementById('f-fee').style.display=val==='y'?'flex':'none';
-  }else if(type==='saas'){
-    document.getElementById('has-saas-m').className=val==='m'?'active-b':'';
-    document.getElementById('has-saas-a').className=val==='a'?'active-b':'';
-    document.getElementById('has-saas-n').className=val==='n'?'active-n':'';
-    document.getElementById('f-saas').style.display=val!=='n'?'flex':'none';
-  }
-  updateR2Preview();
-}
-
 function addPerson(){
-  people.push({cargo:'',qtd:1,custo:0,contrato:'clt'});
+  people.push({cargo:'',qtd:1,custo:0,contrato:'clt',substituicao:100});
   renderPeople();
 }
 function removePerson(i){people.splice(i,1);renderPeople();updatePreview();}
 function renderPeople(){
   const c=document.getElementById('people-list');
-  if(!people.length){c.innerHTML='<div style="font-size:12px;color:var(--mt);padding:4px 0;">Clique para adicionar quem executa esta demanda...</div>';return;}
+  if(!people.length){c.innerHTML='<div style="font-size:13px;color:var(--mt);padding:6px 0;">Clique para vincular profissionais que executam esse legado...</div>';return;}
   c.innerHTML=people.map((p,i)=>`
-    <div class="people-row">
-      <div class="ff"><label>Cargo/Profissional</label><input type="text" value="${p.cargo}" placeholder="Analista, Assistente..." onchange="people[${i}].cargo=this.value"/></div>
-      <div class="ff fixed-w2"><label>Contratação</label>
+    <div class="dynamic-row">
+      <div class="ff"><label>Profissional/Cargo</label><input type="text" value="${p.cargo}" placeholder="Ex: Analista de Contas" onchange="people[${i}].cargo=this.value"/></div>
+      <div class="ff fixed-s"><label>Contratação</label>
         <select onchange="people[${i}].contrato=this.value;updatePreview()">
           <option value="clt" ${p.contrato==='clt'?'selected':''}>CLT (+70% Enc.)</option>
           <option value="pj" ${p.contrato==='pj'?'selected':''}>PJ / Direto</option>
         </select>
       </div>
-      <div class="ff fixed-w"><label>Qtd</label><input type="number" min="1" value="${p.qtd}" onchange="people[${i}].qtd=parseInt(this.value)||1;updatePreview()"/></div>
-      <div class="ff"><label>Salário/Hora Base (R$)</label><input type="number" min="0" value="${p.custo||''}" placeholder="Ex: 25" onchange="people[${i}].custo=parseFloat(this.value)||0;updatePreview()"/></div>
+      <div class="ff" style="flex:0 0 110px"><label>% Substituição</label>
+        <select onchange="people[${i}].substituicao=parseFloat(this.value);updatePreview()">
+          <option value="100" ${p.substituicao===100?'selected':''}>100% (Total)</option>
+          <option value="75" ${p.substituicao===75?'selected':''}>75% (Parcial)</option>
+          <option value="50" ${p.substituicao===50?'selected':''}>50% (Parcial)</option>
+          <option value="25" ${p.substituicao===25?'selected':''}>25% (Foco Bot)</option>
+        </select>
+      </div>
+      <div class="ff" style="flex:0 0 65px"><label>Qtd</label><input type="number" min="1" value="${p.qtd}" onchange="people[${i}].qtd=parseInt(this.value)||1;updatePreview()"/></div>
+      <div class="ff"><label>Custo/Hora Base (R$)</label><input type="number" min="0" value="${p.custo||''}" placeholder="Ex: 25" onchange="people[${i}].custo=parseFloat(this.value)||0;updatePreview()"/></div>
       <button class="rm-btn" onclick="removePerson(${i})"><i class="ti ti-trash"></i></button>
     </div>`).join('');
+}
+
+function addProposalCost(nome='', tipo='mensal', valor=0){
+  proposalCosts.push({nome, tipo, valor});
+  renderProposalCosts();
+}
+function removeProposalCost(i){
+  proposalCosts.splice(i,1);
+  renderProposalCosts();
+}
+function renderProposalCosts(){
+  const c=document.getElementById('proposal-costs-list');
+  if(!proposalCosts.length){
+    c.innerHTML='<div style="font-size:13px;color:var(--mt);padding:6px 0;">Nenhum custo mapeado. Adicione linhas como Setup, Mensalidade, Órbita, etc.</div>';
+    updateR2Preview();
+    return;
+  }
+  c.innerHTML=proposalCosts.map((pc,i)=>`
+    <div class="dynamic-row">
+      <div class="ff"><label>Descrição do Item de Custo</label><input type="text" value="${pc.nome}" placeholder="Ex: Licenciamento Órbita, Mensalidade SaaS, Setup de Dev..." onchange="proposalCosts[${i}].nome=this.value"/></div>
+      <div class="ff fixed-s"><label>Tipo de Cobrança</label>
+        <select onchange="proposalCosts[${i}].tipo=this.value;updateR2Preview()">
+          <option value="setup" ${pc.tipo==='setup'?'selected':''}>Setup (Único)</option>
+          <option value="mensal" ${pc.tipo==='mensal'?'selected':''}>Mensalidade (Recorrente)</option>
+          <option value="anual" ${pc.tipo==='anual'?'selected':''}>Anual (Recorrente)</option>
+        </select>
+      </div>
+      <div class="ff" style="flex:0 0 160px"><label>Valor Comercial (R$)</label><input type="number" min="0" value="${pc.valor||''}" placeholder="0.00" oninput="proposalCosts[${i}].valor=parseFloat(this.value)||0;updateR2Preview()"/></div>
+      <button class="rm-btn" onclick="removeProposalCost(${i})"><i class="ti ti-trash"></i></button>
+    </div>`).join('');
+  updateR2Preview();
 }
 
 function g(id){const e=document.getElementById(id);return e?e.value:'';}
@@ -398,10 +428,9 @@ function calculateLabor(){
   const mh=getMonthlyHours();
   if(!mh) return 0;
   return people.reduce((sum, p)=>{
-    // Se for CLT, aplica fator multiplicador médio de mercado (1.70 = +70% cobrindo 13º, férias, FGTS e provisões)
-    const taxaEncargo = p.contrato === 'clt' ? 1.70 : 1.0;
-    const custoRealHora = p.custo * taxaEncargo;
-    return sum + (p.qtd * custoRealHora * mh);
+    const encargo = p.contrato === 'clt' ? 1.70 : 1.0;
+    const fatorSubstituicao = p.substituicao / 100;
+    return sum + (p.qtd * (p.custo * encargo) * mh * fatorSubstituicao);
   }, 0);
 }
 
@@ -411,11 +440,21 @@ function updatePreview(){
   const laborCost=calculateLabor();
   const extraCost=n('p-errcost')+n('p-pencost');
   const total=laborCost+extraCost;
+  
   if(total>0){
     document.getElementById('roi-preview').style.display='block';
     document.getElementById('prev-labor').textContent=fmt(laborCost);
     document.getElementById('prev-extra').textContent=fmt(extraCost);
     document.getElementById('prev-total').textContent=fmt(total);
+    
+    // Texto explicativo da formula
+    let formulaStr = `Gargalo Total = (Tempo de Equipe Recalculado) + Falhas Adicionais\n`;
+    people.forEach(p => {
+      const encTxt = p.contrato==='clt'?' * 1.70 (Encargos CLT)':'';
+      formulaStr += `• ${p.cargo || 'Profissional'}: Horas no Mês (${fmtf(mh,1)}h) * Qtd (${p.qtd}) * Valor/Hora (R$ ${p.custo})${encTxt} * Substituição (${p.substituicao}%) = ${fmt(p.qtd * (p.custo * (p.contrato==='clt'?1.70:1)) * mh * (p.substituicao/100))}\n`;
+    });
+    if(extraCost > 0) formulaStr += `• Custos de Riscos/Erros Adicionados: R$ ${extraCost}/mês\n`;
+    document.getElementById('formula-r1-text').innerText = formulaStr;
   }else{
     document.getElementById('roi-preview').style.display='none';
   }
@@ -423,63 +462,53 @@ function updatePreview(){
 
 function saveProcess(){
   const name=g('p-name');
-  const miss=[];
-  if(!name)miss.push('Definir nome do processo');
-  if(!n('p-freq')||!n('p-time'))miss.push('Preencher quantidade de execuções e tempo gasto');
-  if(!people.length)miss.push('Adicionar pelo menos uma pessoa envolvida');
-  
-  const al=document.getElementById('alert-r1');
-  if(miss.length){
-    al.style.display='block';
-    document.getElementById('alert-list-r1').innerHTML=miss.map(x=>`<li>${x}</li>`).join('');
+  if(!name || !n('p-freq') || !n('p-time') || !people.length){
+    alert('Por favor, preencha o nome do processo, volumetria/tempo e insira pelo menos um profissional envolvido.');
     return;
   }
-  al.style.display='none';
 
   const labor=calculateLabor();
   const totalWaste=labor+n('p-errcost')+n('p-pencost');
-  
   const steps=[];
   document.querySelectorAll('.p-step:checked').forEach(c=>steps.push(c.value));
 
   const p={
     id:Date.now(),phase:'r1',
-    empresa:g('c-empresa')||'Cliente Potencial',contato:g('c-contato'),
-    name,funit:g('p-funit'),freq:n('p-freq'),time:n('p-time'),vol:g('p-vol'),
-    steps,pdesc:g('p-desc'),people:JSON.parse(JSON.stringify(people)),
+    empresa:g('c-empresa')||'Cliente em Prospecção',contato:g('c-contato'),
+    name,funit:g('p-funit'),freq:n('p-freq'),time:n('p-time'),vol:n('p-vol'),
+    steps,pdesc:g('p-desc'),api:g('p-api'),people:JSON.parse(JSON.stringify(people)),
     errCost:n('p-errcost'),penCost:n('p-pencost'),laborCost:labor,totalWaste,
     notes:g('p-notes'),
-    errToggle:toggles.err,incToggle:toggles.inc,stdToggle:toggles.std,
-    setupCost:0,monthlyFee:0,saasCost:0,invest:0,netROI:0,payback:0,benefit:totalWaste*0.85
+    errToggle:toggles.err,incToggle:toggles.inc,
+    savedCosts:[], invest:0, netROI:0, payback:0, costMonthly:0
   };
 
-  let sc=30;
-  if(p.errToggle==='y')sc+=20;
-  if(p.incToggle==='y')sc+=25;
-  if(p.stdToggle==='y')sc+=15;
-  sc+=steps.length*2;
+  // Complexidade básica baseada em passos e API
+  let sc=35;
+  if(p.api==='nao') sc+=30;
+  if(p.api==='parcial') sc+=15;
+  sc += steps.length * 5;
   p.score=Math.min(sc,100);
 
   procs.push(p);
   document.getElementById('cnt').textContent=procs.length;
   clearR1();
-  switchPhase('rank');
+  switchPhase('r2');
 }
 
 function clearR1(){
   ['p-name','p-time','p-vol','p-errcost','p-pencost','p-notes','p-desc','c-empresa','c-contato'].forEach(id=>{if(document.getElementById(id))document.getElementById(id).value='';});
   document.getElementById('p-freq').value='1';
   document.querySelectorAll('.p-step').forEach(c=>c.checked=false);
-  people=[];toggles={err:'n',inc:'n',std:'n',setup:'n',fee:'n',saas:'n'};
+  people=[];toggles={err:'n',inc:'n'};
   renderPeople();
-  document.getElementById('alert-r1').style.display='none';
   document.getElementById('roi-preview').style.display='none';
 }
 
 function loadR2Select(){
   const sel=document.getElementById('r2-proc-sel');
   const cur=sel.value;
-  sel.innerHTML='<option value="">— selecione o processo —</option>'+procs.map(p=>`<option value="${p.id}">${p.name}${p.phase==='r2'?' (Com Proposta)':''}</option>`).join('');
+  sel.innerHTML='<option value="">— Selecione o processo mapeado —</option>'+procs.map(p=>`<option value="${p.id}">${p.name} [${p.empresa}]</option>`).join('');
   if(cur)sel.value=cur;
   loadR2();
 }
@@ -492,41 +521,89 @@ function loadR2(){
   const p=procs.find(x=>x.id===id);
   form.style.display='block';
   
-  document.getElementById('r2-setup').value=p.setupCost||'';
-  document.getElementById('r2-fee').value=p.monthlyFee||'';
-  document.getElementById('r2-saas').value=p.saasCost||'';
+  // Carrega custos já salvos ou gera a estrutura inicial padrão baseada no motor técnico
+  if(p.savedCosts && p.savedCosts.length > 0){
+    proposalCosts = JSON.parse(JSON.stringify(p.savedCosts));
+  } else {
+    proposalCosts = [
+      {nome: 'Taxa de Setup Comercial', tipo: 'setup', valor: 0},
+      {nome: 'Licenciamento / Mensalidade Shore', tipo: 'mensal', valor: 0}
+    ];
+  }
   
-  toggleCostField('setup',p.setupCost?'y':'n');
-  toggleCostField('fee',p.monthlyFee?'y':'n');
-  toggleCostField('saas',p.saasCost?(p.saasType||'m'):'n');
+  renderProposalCosts();
+  runPricingEngine();
+}
+
+function runPricingEngine(){
+  const id=currentR2Id; if(!id)return;
+  const p=procs.find(x=>x.id===id); if(!p)return;
   
-  updateR2Preview();
+  const rh = parseInt(document.getElementById('r2-rate').value)||150;
+  const comp = document.getElementById('r2-complex').value;
+  
+  // Script robusto com cenários lógicos baseados na volumetria, API e passos
+  let horasBase = 40; 
+  let arquiteturaSugerida = "Python Scripting / API Rest";
+
+  if(p.api === 'nao'){
+    horasBase = 80;
+    arquiteturaSugerida = "RPA (Automation Anywhere / Selenium Legado)";
+  } else if(p.api === 'parcial'){
+    horasBase = 60;
+    arquiteturaSugerida = "Híbrido (Orquestração n8n + Sub-rotinas)";
+  }
+
+  // Peso por passos operacionais
+  horasBase += (p.steps.length * 8);
+
+  // Multiplicador de complexidade avaliado pelo vendedor
+  if(comp === 'media') horasBase *= 1.25;
+  if(comp === 'alta') horasBase *= 1.6;
+
+  // Ajuste por volumetria crítica
+  if(p.vol > 5000) horasBase += 20;
+
+  const custoTotalDev = Math.round(horasBase * rh);
+  
+  document.getElementById('pricing-engine-output').innerHTML = `
+    <strong>Arquitetura Recomendada:</strong> ${arquiteturaSugerida}<br>
+    <strong>Esforço de Fábrica Estimado:</strong> ${Math.round(horasBase)} horas de engenharia.<br>
+    <strong>Fórmula do Esforço:</strong> (Base de Integração [${p.api === 'nao'?'RPA': p.api==='parcial'?'Híbrido':'API'}]) + (${p.steps.length} passos × 8h) × Fator Risco [${comp}] = <strong>${fmt(custoTotalDev)} de Custo Técnico Interno</strong>.<br>
+    <span style="color:var(--mt); font-size:11px;">💡 Use este valor técnico interno para calibrar o seu preço de "Setup Comercial" na tabela abaixo.</span>
+  `;
 }
 
 function updateR2Preview(){
   const id=currentR2Id;if(!id)return;
   const p=procs.find(x=>x.id===id);if(!p)return;
 
-  const setup=toggles.setup==='y'?n('r2-setup'):0;
-  const fee=toggles.fee==='y'?n('r2-fee'):0;
-  const saas=toggles.saas!=='n'?n('r2-saas'):0;
-  
-  const mSaas = toggles.saas==='a'?(saas/12):saas;
-  const totalTechMonthly=fee+mSaas;
+  let totalSetup = 0;
+  let totalMensalRecorrente = 0;
 
-  const netROI=p.benefit-totalTechMonthly;
-  const totalInvest=setup;
+  proposalCosts.forEach(pc => {
+    if(pc.tipo === 'setup') totalSetup += pc.valor;
+    if(pc.tipo === 'mensal') totalMensalRecorrente += pc.valor;
+    if(pc.tipo === 'anual') totalMensalRecorrente += (pc.valor / 12);
+  });
 
-  document.getElementById('r2-benefit').textContent=fmt(p.benefit);
-  document.getElementById('r2-cost-out').textContent=totalTechMonthly?'-'+fmt(totalTechMonthly):'R$ 0';
-  document.getElementById('r2-net').textContent=fmt(netROI);
-  document.getElementById('r2-invest').textContent=fmt(totalInvest);
+  const netROI = p.totalWaste - totalMensalRecorrente;
   
-  let pb='Imediato';
-  if(totalInvest>0){
-    pb=netROI>0?fmtf(totalInvest/netROI,1)+' meses':'N/A (ROI Negativo)';
+  document.getElementById('r2-waste-label').textContent = fmt(p.totalWaste) + '/mês';
+  document.getElementById('r2-cost-out').textContent = totalMensalRecorrente ? fmt(totalMensalRecorrente) + '/mês' : 'R$ 0';
+  document.getElementById('r2-net').textContent = fmt(netROI) + '/mês';
+  document.getElementById('r2-invest').textContent = fmt(totalSetup);
+
+  let pb = 'Imediato (Sem setup proposto)';
+  if(totalSetup > 0){
+    pb = netROI > 0 ? fmtf(totalSetup / netROI, 1) + ' meses' : 'N/A (Custo Shore supera o desperdício)';
   }
-  document.getElementById('r2-payback').textContent=pb;
+  document.getElementById('r2-payback').textContent = pb;
+
+  // Demonstrativo de fórmula transparente
+  document.getElementById('formula-r2-text').innerText = 
+    `• Retorno Líquido Mensal para o Cliente = Desperdício Legado (${fmt(p.totalWaste)}) - Custos Shore Solução (${fmt(totalMensalRecorrente)})\n` +
+    `• Amortização / Payback = Investimento Inicial (${fmt(totalSetup)}) ÷ Retorno Líquido (${fmt(netROI)})`;
 }
 
 function saveR2(){
@@ -534,64 +611,67 @@ function saveR2(){
   const idx=procs.findIndex(x=>x.id===id);if(idx<0)return;
   const p=procs[idx];
 
-  const setup=toggles.setup==='y'?n('r2-setup'):0;
-  const fee=toggles.fee==='y'?n('r2-fee'):0;
-  const saas=toggles.saas!=='n'?n('r2-saas'):0;
-  const mSaas = toggles.saas==='a'?(saas/12):saas;
+  let totalSetup = 0;
+  let totalMensalRecorrente = 0;
 
-  procs[idx].phase='r2';
-  procs[idx].setupCost=setup;
-  procs[idx].monthlyFee=fee;
-  procs[idx].saasCost=saas;
-  procs[idx].saasType=toggles.saas;
-  procs[idx].invest=setup;
-  procs[idx].netROI=p.benefit-(fee+mSaas);
-  procs[idx].payback=procs[idx].netROI>0?(setup/procs[idx].netROI):99;
+  proposalCosts.forEach(pc => {
+    if(pc.tipo === 'setup') totalSetup += pc.valor;
+    if(pc.tipo === 'mensal') totalMensalRecorrente += pc.valor;
+    if(pc.tipo === 'anual') totalMensalRecorrente += (pc.valor / 12);
+  });
+
+  procs[idx].phase = 'r2';
+  procs[idx].savedCosts = JSON.parse(JSON.stringify(proposalCosts));
+  procs[idx].invest = totalSetup;
+  procs[idx].costMonthly = totalMensalRecorrente;
+  procs[idx].netROI = p.totalWaste - totalMensalRecorrente;
+  procs[idx].payback = procs[idx].netROI > 0 ? (totalSetup / procs[idx].netROI) : 99;
 
   switchPhase('rank');
 }
 
 function switchPhase(ph){
   ['r1','r2','rank'].forEach(x=>{
-    document.getElementById('view-'+x).style.display=x===ph?'block':'none';
-    const el=document.getElementById('ph-'+x);if(el)el.classList.remove('active');
+    document.getElementById('view-'+x).style.display = x===ph ? 'block' : 'none';
+    const el=document.getElementById('ph-'+x); if(el) el.classList.remove('active');
   });
   document.getElementById('ph-'+ph).classList.add('active');
-  if(ph==='r2')loadR2Select();
-  if(ph==='rank')renderRanking();
+  if(ph==='r2') loadR2Select();
+  if(ph==='rank') renderRanking();
 }
 
 function renderRanking(){
   const rc=document.getElementById('rank-c');
   const ss=document.getElementById('summary-sec');
   document.getElementById('pbox').style.display='none';
-  if(!procs.length){rc.innerHTML='<div class="empty"><i class="ti ti-chart-bar"></i>Nenhum processo salvo ainda.</div>';ss.style.display='none';return;}
+  if(!procs.length){rc.innerHTML='<div class="empty"><i class="ti ti-chart-bar"></i>Nenhum processo salvo no escopo atual.</div>';ss.style.display='none';return;}
   
   rc.innerHTML=`<table class="rtable">
-    <thead><tr><th>#</th><th>Processo</th><th>Status</th><th>Prejuízo Atual</th><th>Ganho Estimado</th><th>Score Complexidade</th></tr></thead>
+    <thead><tr><th>#</th><th>Oportunidade Mapeada</th><th>Status Proposta</th><th>Gargalo Cliente</th><th>Retorno Líquido Shore</th><th>Complexidade Técnica</th></tr></thead>
     <tbody>${procs.map((p,i)=>`<tr>
       <td style="color:var(--mt); font-weight:600">${i+1}</td>
-      <td><strong>${p.name}</strong><div style="font-size:10px;color:var(--mt)">${p.empresa}</div></td>
-      <td><span class="badge" style="background:${p.phase==='r1'?'#222':'#0A1F15'}; color:${p.phase==='r1'?'#aaa':'var(--gn)'}">${p.phase==='r1'?'Sem Proposta':'Precificado'}</span></td>
-      <td style="color:var(--rd)">${fmt(p.totalWaste)}</td>
-      <td style="color:var(--gn); font-weight:600">${p.phase==='r1'?'~'+fmt(p.benefit):fmt(p.netROI)+'/mês'}</td>
+      <td><strong>${p.name}</strong><div style="font-size:11px;color:var(--mt)">${p.empresa}</div></td>
+      <td><span class="badge" style="background:${p.phase==='r1'?'#374151':'#064E3B'}; color:${p.phase==='r1'?'#D1D5DB':'#A7F3D0'}">${p.phase==='r1'?'Apenas Mapeado':'Precificado'}</span></td>
+      <td style="color:var(--rd)">${fmt(p.totalWaste)}/mês</td>
+      <td style="color:var(--gn); font-weight:700">${p.phase==='r1'?'Mapeando...':fmt(p.netROI)+'/mês'}</td>
       <td>
-        <div style="font-size:10px; margin-bottom:2px;">${p.score}/100</div>
-        <div class="sbar"><div class="sfill" style="width:${p.score}%;background:${p.score>60?'var(--rd)':'var(--gn)'}"></div></div>
+        <div style="font-size:11px; margin-bottom:3px;">Score: ${Math.round(p.score)}/100</div>
+        <div class="sbar"><div class="sfill" style="width:${p.score}%;background:${p.score>60?'var(--rd)':'var(--gd)'}"></div></div>
       </td>
     </tr>`).join('')}</tbody>
   </table>`;
 
   const withProp=procs.filter(x=>x.phase==='r2');
+  const totW=procs.reduce((s,p)=>s+p.totalWaste,0);
   const totN=withProp.reduce((s,p)=>s+p.netROI,0);
   const totI=withProp.reduce((s,p)=>s+p.invest,0);
   
   ss.style.display='block';
   document.getElementById('summary-m').innerHTML=`
-    <div class="mc"><div class="mc-label">Mapeados</div><div class="mc-val">${procs.length}</div></div>
-    <div class="mc"><div class="mc-label">Propostas prontas</div><div class="mc-val gld">${withProp.length}</div></div>
-    <div class="mc"><div class="mc-label">Retorno Líquido Total</div><div class="mc-val pos">${fmt(totN)}/mês</div></div>
-    <div class="mc"><div class="mc-label">Investimento Total</div><div class="mc-val gld">${fmt(totI)}</div></div>`;
+    <div class="mc"><div class="mc-label">Processos Mapeados</div><div class="mc-val">${procs.length}</div></div>
+    <div class="mc"><div class="mc-label">Gargalo Total Cliente</div><div class="mc-val" style="color:var(--rd)">${fmt(totW)}/mês</div></div>
+    <div class="mc"><div class="mc-label">Eficiência Líquida Injetada</div><div class="mc-val pos">${fmt(totN)}/mês</div></div>
+    <div class="mc"><div class="mc-label">Investimento Total Setup</div><div class="mc-val" style="color:var(--bl)">${fmt(totI)}</div></div>`;
 }
 
 function genPitch(){
@@ -601,31 +681,30 @@ function genPitch(){
   const totN=withProp.reduce((s,p)=>s+p.netROI,0);
   const totI=withProp.reduce((s,p)=>s+p.invest,0);
 
-  let ptext=`Fala pessoal da *${p.empresa}*,\n\n`;
-  ptext+=`Passando para consolidar os retornos financeiros que mapeamos no processo de diagnóstico de automação.\n\n`;
-  ptext+=`🔴 *O Cenário Atual:*\n`;
+  let ptext=`Prezado time da *${p.empresa}*,\n\n`;
+  ptext+=`Abaixo apresentamos o Business Case estruturado pela Shore Tech focado na eliminação dos gargalos operacionais e ineficiências identificadas.\n\n`;
+  ptext+=`🔴 *O Diagnóstico Operacional (Cenário de Desperdício Atual):*\n`;
   
   procs.forEach(pr=>{
-    ptext+=`• No processo de *${pr.name}*, as atividades manuais mapeadas absorvem o custo de profissionais especializados.`;
-    if(pr.pdesc) ptext+=` (Passos mapeados: _${pr.pdesc}_).`;
-    ptext+=` Custo total do gargalo atual considerando perdas e encargos trabalhistas: *${fmt(pr.totalWaste)}/mês*.\n`;
-    if(pr.notes) ptext+=`  _Nota da operação:_ "${pr.notes}"\n`;
+    ptext+=`• No processo de *${pr.name}*, as atividades repetitivas manuais consomem tempo valioso da equipe especializada.`;
+    if(pr.pdesc) ptext+=` (Mapeamento: _${pr.pdesc}_).`;
+    ptext+=` O impacto financeiro direto desse gargalo legado (incluindo custos trabalhistas, encargos de substituição e riscos de retrabalho) totaliza *${fmt(pr.totalWaste)}/mês*.\n`;
   });
 
   if(withProp.length > 0){
-    ptext+=`\n🟢 *Nossa Proposta de Solução & Eficiência:*\n`;
-    ptext+=`Com a automação inteligente da Shore, eliminamos o desperdício operacional gerando o seguinte retorno:\n`;
-    ptext+=`• *Economia de Desperdício Recuperada:* Mais de 85% de eficiência operacional devolvida.\n`;
-    ptext+=`• *Retorno Líquido Mensal Estimado:* *${fmt(totN)}/mês* livres para a empresa.\n`;
+    ptext+=`\n🟢 *Engenharia de Solução e Proposta Comercial Shore:*\n`;
+    ptext+=`Substituindo essas etapas através da nossa arquitetura de Hiperautomação inteligente, convertemos esse gargalo em ganho financeiro imediato:\n`;
+    ptext+=`• *Retorno Líquido de Caixa Devolvido:* + *${fmt(totN)}/mês* (Já descontados todos os custos de sustentação e licenças operacionais).\n`;
     if(totI > 0){
-      ptext+=`• *Investimento de Setup Inicial:* ${fmt(totI)}\n`;
-      ptext+=`• *Payback:* Retorno completo do investimento estimado em poucos meses.\n`;
+      ptext+=`• *Investimento em Setup Inicial:* ${fmt(totI)} pago uma única vez.\n`;
+      ptext+=`• *Amortização (Payback):* O projeto se paga integralmente em pouquíssimos meses através da própria geração de caixa gerada.\n`;
     }else{
-      ptext+=`• *Investimento Inicial:* Isento / Sem taxa de setup.\n`;
+      ptext+=`• *Taxa de Setup:* Isenta para este modelo estratégico.\n`;
     }
+    ptext+=`\n*Fórmulas Transparentes aplicadas:* Retorno Líquido = Gargalo Operacional Mapeado - Manutenção Comercial Proposta.`;
   }
 
-  ptext+=`\n🚀 *Próximos Passos:* Conectar com o time de implantação técnica para agendarmos o Kickoff até o final desta semana. De acordo por aí?`;
+  ptext+=`\n\n🚀 *Próximo Passo:* Validar o escopo técnico com nossa equipe de engenharia para darmos o Kickoff do projeto ainda esta semana. Ficamos no aguardo de sua confirmação!`;
 
   document.getElementById('ptext').textContent=ptext;
   document.getElementById('pbox').style.display='block';
@@ -634,9 +713,7 @@ function genPitch(){
 
 function copyPitch(){
   const text=document.getElementById('ptext').textContent;
-  navigator.clipboard.writeText(text).then(()=>{
-    alert('Pitch copiado com sucesso!');
-  });
+  navigator.clipboard.writeText(text).then(()=>{alert('Pitch copiado para a área de transferência!');});
 }
 
 function fmt(v){return'R$ '+Math.round(v).toLocaleString('pt-BR');}
@@ -644,9 +721,9 @@ function fmtf(v,d=1){return parseFloat(v).toFixed(d);}
 
 function exportData(){
   if(!procs.length)return;
-  const blob=new Blob([JSON.stringify({shore:'ROI Calculator v4',date:new Date().toISOString(),procs},null,2)],{type:'application/json'});
+  const blob=new Blob([JSON.stringify({shore:'ROI Pricing Calculator v5',date:new Date().toISOString(),procs},null,2)],{type:'application/json'});
   const url=URL.createObjectURL(blob);
-  const a=document.createElement('a'); a.href=url; a.download='shore_roi_'+new Date().toISOString().slice(0,10)+'.json';
+  const a=document.createElement('a'); a.href=url; a.download='shore_roi_project.json';
   document.body.appendChild(a); a.click(); document.body.removeChild(a);
   URL.revokeObjectURL(url);
 }
